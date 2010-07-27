@@ -86,7 +86,7 @@ class MyPaginatorHelper extends PaginatorHelper
 	 * @param array $options オプション (有効時)
 	 * @param string $disabledTitle テキスト (無効時)
 	 * @param array $disabledOptions オプション (無効時)
-	 * @return <type>
+	 * @return string HTML
 	 */
 	public function __pagingLink($which, $title = null, $options = array(), $disabledTitle = null, $disabledOptions = array()) {
 		$check = 'has' . $which;
