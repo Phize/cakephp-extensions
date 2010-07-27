@@ -4,14 +4,37 @@
  *
  * @todo テストケースを作成
  */
-class ValidationBehavior extends ModelBehavior
-{
+class ValidationBehavior extends ModelBehavior {
 	/**
 	 * セットアップ
 	 *
 	 * @param AppModel $Model モデルインスタンス
 	 */
 	public function setup(&$Model, $config = array()) {
+	}
+
+	/**
+	 * 指定したバリデーションルールをマージ
+	 *
+	 * @param array $rules バリデーションルール
+	 */
+	public function bindValidation($rules) {
+		$fields = is_array($fields) ? $fields : array($fiedls);
+
+		$this->validate = array_merge($this->validate, $fields);
+	}
+
+	/**
+	 * 指定したフィールドのバリデーションルールを削除
+	 *
+	 * @param string|array $fields バリーデーションルールから削除するフィールド名
+	 */
+	public function unbindValidation($fields) {
+		$fields = is_array($fields) ? $fields : array($fiedls);
+
+		foreach ($fiedls as $fields) {
+			unset($this->validate[$field]);
+		}
 	}
 
 	/**
