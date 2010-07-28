@@ -105,6 +105,10 @@ class ValidationBehaviorTestCase extends CakeTestCase {
 	 */
 	public function testUnbindValidation() {
 		$this->ValidationRule->validate = array('field' => array('rule' => 'notEmpty'));
+		$this->ValidationRule->unbindValidation();
+		$this->assertIdentical($this->ValidationRule->validate, array());
+
+		$this->ValidationRule->validate = array('field' => array('rule' => 'notEmpty'));
 		$this->ValidationRule->unbindValidation('field');
 		$this->assertIdentical($this->ValidationRule->validate, array());
 

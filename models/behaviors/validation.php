@@ -29,10 +29,17 @@ class ValidationBehavior extends ModelBehavior {
 	/**
 	 * 指定したフィールドのバリデーションルールを削除
 	 *
+	 * $fieldsがnullの場合は全てのバリデーションルールを削除
+	 *
 	 * @param AppModel $Model モデルインスタンス
 	 * @param string|array $fields バリーデーションルールから削除するフィールド名
 	 */
-	public function unbindValidation(&$Model, $fields) {
+	public function unbindValidation(&$Model, $fields = null) {
+		if ($fields === null) {
+			$Model->validate = array();
+			return;
+		}
+
 		$fields = is_array($fields) ? $fields : array($fields);
 
 		foreach ($fields as $field) {
