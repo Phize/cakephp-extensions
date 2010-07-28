@@ -84,38 +84,38 @@ class ValidationBehaviorTestCase extends CakeTestCase {
 	 * bindValidation()のテスト
 	 */
 	public function testBindValidation() {
-//		$expected = array('field' => array('rule' => 'notEmpty'));
-//		$this->ValidationRule->bindValidation($expected);
-//		$this->assertIdentical($this->ValidationRule->validate, $expected);
-//
-//		$this->ValidationRule->validate = array('field' => array('rule' => 'notEmpty'));
-//		$expected = array('field' => array('rule' => 'numeric'));
-//		$this->ValidationRule->bindValidation($expected);
-//		$this->assertIdentical($this->ValidationRule->validate, $expected);
-//
-//		$this->ValidationRule->validate = array('field1' => array('rule' => 'notEmpty'));
-//		$validate = array('field2' => array('rule' => 'numeric'));
-//		$expected = array('field1' => array('rule' => 'notEmpty'), 'field2' => array('rule' => 'numeric'));
-//		$this->ValidationRule->bindValidation($expected);
-//		$this->assertIdentical($this->ValidationRule->validate, $expected);
+		$expected = array('field' => array('rule' => 'notEmpty'));
+		$this->ValidationRule->bindValidation($expected);
+		$this->assertIdentical($this->ValidationRule->validate, $expected);
+
+		$this->ValidationRule->validate = array('field' => array('rule' => 'notEmpty'));
+		$expected = array('field' => array('rule' => 'numeric'));
+		$this->ValidationRule->bindValidation($expected);
+		$this->assertIdentical($this->ValidationRule->validate, $expected);
+
+		$this->ValidationRule->validate = array('field1' => array('rule' => 'notEmpty'));
+		$validate = array('field2' => array('rule' => 'numeric'));
+		$expected = array('field1' => array('rule' => 'notEmpty'), 'field2' => array('rule' => 'numeric'));
+		$this->ValidationRule->bindValidation($expected);
+		$this->assertIdentical($this->ValidationRule->validate, $expected);
 	}
 
 	/**
 	 * unbindValidation()のテスト
 	 */
 	public function testUnbindValidation() {
-//		$this->ValidationRule->validate = array('field' => array('rule' => 'notEmpty'));
-//		$this->ValidationRule->unbindValidation('field');
-//		$this->assertIdentical($this->ValidationRule->validate, array());
-//
-//		$this->ValidationRule->validate = array('field 1' => array('rule' => 'notEmpty'), 'field2' => array('rule' => 'numeric'));
-//		$this->ValidationRule->bindValidation(array('field 1', 'field 2'));
-//		$this->assertIdentical($this->ValidationRule->validate, array());
-//
-//		$this->ValidationRule->validate = array('field1' => array('rule' => 'notEmpty'), 'field2' => array('rule' => 'numeric'));
-//		$expected = array('field1' => array('rule' => 'notEmpty'));
-//		$this->ValidationRule->bindValidation('field 2');
-//		$this->assertIdentical($this->ValidationRule->validate, $expected);
+		$this->ValidationRule->validate = array('field' => array('rule' => 'notEmpty'));
+		$this->ValidationRule->unbindValidation('field');
+		$this->assertIdentical($this->ValidationRule->validate, array());
+
+		$this->ValidationRule->validate = array('field1' => array('rule' => 'notEmpty'), 'field2' => array('rule' => 'numeric'));
+		$this->ValidationRule->unbindValidation(array('field1', 'field2'));
+		$this->assertIdentical($this->ValidationRule->validate, array());
+
+		$this->ValidationRule->validate = array('field1' => array('rule' => 'notEmpty'), 'field2' => array('rule' => 'numeric'));
+		$expected = array('field1' => array('rule' => 'notEmpty'));
+		$this->ValidationRule->unbindValidation('field2');
+		$this->assertIdentical($this->ValidationRule->validate, $expected);
 	}
 
 	/**

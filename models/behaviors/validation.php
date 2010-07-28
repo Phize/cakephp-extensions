@@ -17,24 +17,26 @@ class ValidationBehavior extends ModelBehavior {
 	/**
 	 * 指定したバリデーションルールをマージ
 	 *
+	 * @param AppModel $Model モデルインスタンス
 	 * @param array $rules バリデーションルール
 	 */
-	public function bindValidation($rules) {
-		$fields = is_array($fields) ? $fields : array($fiedls);
+	public function bindValidation(&$Model, $rules) {
+		$rules = is_array($rules) ? $rules : array($rules);
 
-		$this->validate = array_merge($this->validate, $fields);
+		$Model->validate = array_merge($Model->validate, $rules);
 	}
 
 	/**
 	 * 指定したフィールドのバリデーションルールを削除
 	 *
+	 * @param AppModel $Model モデルインスタンス
 	 * @param string|array $fields バリーデーションルールから削除するフィールド名
 	 */
-	public function unbindValidation($fields) {
-		$fields = is_array($fields) ? $fields : array($fiedls);
+	public function unbindValidation(&$Model, $fields) {
+		$fields = is_array($fields) ? $fields : array($fields);
 
-		foreach ($fiedls as $fields) {
-			unset($this->validate[$field]);
+		foreach ($fields as $field) {
+			unset($Model->validate[$field]);
 		}
 	}
 
