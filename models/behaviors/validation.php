@@ -3,6 +3,7 @@
  * 拡張バリデーションビヘイビア
  *
  * @todo テストケースを作成
+ * @todo バリデーションルールの動的な切り替え
  */
 class ValidationBehavior extends ModelBehavior {
 	/**
@@ -40,6 +41,7 @@ class ValidationBehavior extends ModelBehavior {
 	/**
 	 * Datetime型の検証
 	 *
+	 * @param AppModel $Model モデルインスタンス
 	 * @param array $data データ
 	 * @return boolean 検証の結果
 	 */
@@ -61,16 +63,16 @@ class ValidationBehavior extends ModelBehavior {
 	 * @param string model モデル名
 	 * @return boolean 検証の結果
 	 */
-	public function primaryKeyExists(&$Model, $data, $model) {
+	public function primaryKeyExists(&$Model, $data, $modelName) {
 		$field = key($data);
 
-		if (strpos($model, '.') !== false) {
-			list($plugin, $class) = pluginSplit($model);
+		if (strpos($modelName, '.') !== false) {
+			list($plugin, $modelName) = pluginSplit($modelName);
 		}
 
-		$result = $Model->{$class}->find('count',
+		$result = $Model->{$modelName}->find('count',
 			array(
-				'conditions' => array($Model->{$class}->alias . '.' . $Model->{$class}->primaryKey => $data),
+				'conditions' => array($Model->{$modelName}->alias . '.' . $Model->{$modelName}->primaryKey => $data),
 				'recursive' => -1
 			)
 		);
@@ -90,6 +92,7 @@ class ValidationBehavior extends ModelBehavior {
 	 * かつ関連するテーブルのデータとともにsaveAll()でレコードを作成・更新する場合は、
 	 * $Model->dataに外部キーのフィールドが自動的に追加されるため、外部キーのフィールドについては省略できる
 	 *
+	 * @param AppModel $Model モデルインスタンス
 	 * @param array $data データ
 	 * @param array $fields フィールド名
 	 * @return boolean 検証の結果
