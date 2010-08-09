@@ -2,7 +2,6 @@
 /**
  * 拡張バリデーションビヘイビア
  *
- * @todo テストケースを作成
  * @todo バリデーションルールの動的な切り替え
  */
 class ValidationBehavior extends ModelBehavior {
