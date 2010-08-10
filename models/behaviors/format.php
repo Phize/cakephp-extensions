@@ -41,7 +41,7 @@ class FormatBehavior extends ModelBehavior
 	/**
 	 * セットアップ
 	 *
-	 * @param AppModel モデルインスタンス
+	 * @param AppModel $Model モデルインスタンス
 	 */
 	public function setup(&$Model, $config = array())
 	{
@@ -50,7 +50,7 @@ class FormatBehavior extends ModelBehavior
 	/**
 	 * バリデーション前のコールバックメソッド
 	 *
-	 * @param AppModel モデルインスタンス
+	 * @param AppModel $Model モデルインスタンス
 	 * @todo 独立したメソッド(アソシエーション対応)に変更する
 	 */
 	public function beforeValidate(&$Model)
