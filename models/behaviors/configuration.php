@@ -37,7 +37,7 @@ class ConfigurationBehavior extends ModelBehavior {
 	 * @todo ビヘイビアの読み込み時に、自動的にloadConfig()を呼び出す設定を追加(?)
 	 */
 	public function setup(&$Model, $config = array()) {
-		$defaults = array('namespace' => 'APP_NAME', 'key' => 'key', 'value' => 'value');
+		$defaults = array('namespace' => 'App', 'key' => 'key', 'value' => 'value');
 
 		$this->config[$Model->name] = isset($this->config[$Model->name]) ? $this->config[$Model->name] : $defaults;
 		$this->config[$Model->name] = array_merge($this->config[$Model->name], $config);
