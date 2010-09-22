@@ -54,7 +54,7 @@ class TagCloudHelper extends Helper {
 
 		if ($options['threshold'] !== null) $tags = $this->_prune($tags, $options['threshold']);
 		if ($options['sort'] !== null) $tags = $this->_sort($tags, $options['sort']);
-		if ($options['limit'] !== null) $tags = $this->_filter($tags, $options['limit']);
+		if ($options['limit'] !== null) $tags = $this->_filter($tags, null, $options['limit']);
 
 		$rates = $this->_calculateRate($tags);
 
@@ -113,13 +113,15 @@ class TagCloudHelper extends Helper {
 	 * タグの件数を限定
 	 *
 	 * @param array $tags タグのデータ
+	 * @param string $direction 並び替えの方向 ('asc' = 昇順, 'desc' = 降順)
 	 * @param integer $limit 件数
 	 * @return array 限定後のデータ
 	 */
-	protected function _filter($tags, $limit = null) {
+	protected function _filter($tags, $direction = null, $limit = null) {
 		if ($limit === null) return $tags;
 
 		$_tags = $tags;
+		$tags = $this->_sort($tags, $direction);
 		$tags = array_slice($tags, 0, $limit);
 		$tags = array_intersect_key($_tags, $tags);
 
