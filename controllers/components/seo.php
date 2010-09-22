@@ -43,8 +43,6 @@ class SeoComponent extends Object {
 	 * スタートアップ
 	 *
 	 * @param AppController $controller コントローラーインスタンス
-	 * @return void
-	 * @access public
 	 */
 	public function startup(&$controller) {
 	}
@@ -57,7 +55,6 @@ class SeoComponent extends Object {
 	 *					'site_name' => サイト名
 	 *					'site_desc' => サイトの説明
 	 *					'separator' => セパレーター文字列
-	 * @access public
 	 */
 	public function title($pageTitle = null, $options = array()) {
 		$pageTitle = ($pageTitle != null) ? $this->mb_trim($pageTitle) : null;
@@ -99,7 +96,6 @@ class SeoComponent extends Object {
 	 * @param string $string 対象となる文字列
 	 * @param string $charset 文字エンコーディング
 	 * @return string トリム後の文字列
-	 * @access protected
 	 */
 	protected function mb_trim($string, $charset = null) {
 		if (empty($charset)) {
@@ -125,7 +121,6 @@ class SeoComponent extends Object {
 	 * @param boolean $allow_false false を空にしない場合は true
 	 * @param boolean $allow_ws ホワイトスペースを空にしない場合は true
 	 * @return boolean 変数が空の場合は true
-	 * @access protected
 	 */
 	protected function is_empty($var, $allow_false = false, $allow_ws = false) {
 		if (! isset ($var) || is_null($var) || ($allow_ws == false && $this->mb_trim($var) == '' && !is_bool($var)) || ($allow_false === false && is_bool($var) && $var === false) || (is_array($var) && empty($var))) {
