@@ -32,9 +32,9 @@ class TagCloudHelper extends Helper {
 	 * 以下のオプションを指定することができる。
 	 * min			タグランクの最小値
 	 * max			タグランクの最大値
-	 * threshold	タグ件数の閾値 (指定した件数未満のタグが除去される)
 	 * sort			タグの並び替え方向 ('asc' = 昇順, 'desc' = 降順)
 	 * filter		タグのフィルタリングオプション (並び替え後に指定した件数が抽出される)
+	 *	threshold	タグ件数の閾値 (指定した件数未満のタグが除去される)
 	 *	sort		タグの並び替え方向 ('asc' = 昇順, 'desc' = 降順)
 	 *				(並び替えは抽出のための一時的なもの)
 	 *	limit		タグの件数
@@ -49,16 +49,16 @@ class TagCloudHelper extends Helper {
 		$defaults = array(
 			'min' => 1,
 			'max' => 25,
-			'threshold' => 1,
 			'sort' => null,
 			'filter' => array(
+				'threshold' => 1,
 				'sort' => 'desc',
 				'limit' => null
 			)
 		);
 		$options = Set::merge($defaults, $options);
 
-		if ($options['threshold'] !== null) $tags = $this->_prune($tags, $options['threshold']);
+		if ($options['filter']['threshold'] !== null) $tags = $this->_prune($tags, $options['filter']['threshold']);
 		if ($options['filter']['limit'] !== null) $tags = $this->_filter($tags, $options['filter']['sort'], $options['filter']['limit']);
 		if ($options['sort'] !== null) $tags = $this->_sort($tags, $options['sort']);
 
