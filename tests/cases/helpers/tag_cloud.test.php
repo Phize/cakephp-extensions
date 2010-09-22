@@ -178,7 +178,13 @@ class TagCloudHelperTestCase extends CakeTestCase {
 		$expected = array(
 			'tag1' => array('score' => 10, 'rank' => 13)
 		);
-		$result = $this->TagCloud->calculate($tags, array('limit' => 1));
+		$result = $this->TagCloud->calculate($tags, array('filter' => array('sort' => null, 'limit' => 1)));
+		$this->assertIdentical($result, $expected);
+
+		$expected = array(
+			'tag2' => array('score' => 1, 'rank' => 13)
+		);
+		$result = $this->TagCloud->calculate($tags, array('filter' => array('sort' => 'asc', 'limit' => 1)));
 		$this->assertIdentical($result, $expected);
 	}
 

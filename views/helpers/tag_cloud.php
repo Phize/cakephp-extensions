@@ -34,7 +34,10 @@ class TagCloudHelper extends Helper {
 	 * max			タグランクの最大値
 	 * threshold	タグ件数の閾値 (指定した件数未満のタグが除去される)
 	 * sort			タグの並び替え方向 ('asc' = 昇順, 'desc' = 降順)
-	 * limit		タグの件数
+	 * filter		タグのフィルタリングオプション (並び替え後に指定した件数が抽出される)
+	 *	sort		タグの並び替え方向 ('asc' = 昇順, 'desc' = 降順)
+	 *				(並び替えは抽出のための一時的なもの)
+	 *	limit		タグの件数
 	 *
 	 * @param array $tags タグのデータ
 	 * @param array $options オプション
@@ -48,13 +51,16 @@ class TagCloudHelper extends Helper {
 			'max' => 25,
 			'threshold' => 1,
 			'sort' => null,
-			'limit' => null
+			'filter' => array(
+				'sort' => 'desc',
+				'limit' => null
+			)
 		);
-		$options = array_merge($defaults, $options);
+		$options = Set::merge($defaults, $options);
 
 		if ($options['threshold'] !== null) $tags = $this->_prune($tags, $options['threshold']);
+		if ($options['filter']['limit'] !== null) $tags = $this->_filter($tags, $options['filter']['sort'], $options['filter']['limit']);
 		if ($options['sort'] !== null) $tags = $this->_sort($tags, $options['sort']);
-		if ($options['limit'] !== null) $tags = $this->_filter($tags, null, $options['limit']);
 
 		$rates = $this->_calculateRate($tags);
 
