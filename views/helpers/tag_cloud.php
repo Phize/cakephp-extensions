@@ -41,6 +41,8 @@ class TagCloudHelper extends Helper {
 	 * @return array 算出後のデータ
 	 */
 	public function calculate($tags, $options = array()) {
+		if (empty($tags)) return array();
+
 		$defaults = array(
 			'min' => 1,
 			'max' => 25,
