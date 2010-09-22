@@ -23,11 +23,20 @@ class SeoComponent extends Object {
 	 * 初期化
 	 *
 	 * @param AppController $controller コントローラーインスタンス
-	 * @return void
-	 * @access public
+	 * @param array $options オプション
+	 *					'site_name' => サイト名
+	 *					'site_desc' => サイトの説明
+	 *					'separator' => セパレーター文字列
 	 */
-	public function initialize(&$controller) {
+	public function initialize(&$controller, $options = array()) {
 		$this->controller =& $controller;
+
+		$defaults = array(
+			'site_name' => null,
+			'site_desc' => null,
+			'separator' => ' | '
+		);
+		$this->options = array_merge($defaults, $options);
 	}
 
 	/**
@@ -51,15 +60,8 @@ class SeoComponent extends Object {
 	 * @access public
 	 */
 	public function title($pageTitle = null, $options = array()) {
-		$__options = array(
-				'site_name' => null,
-				'site_desc' => null,
-				'separator' => ' | '
-		);
-
 		$pageTitle = ($pageTitle != null) ? $this->mb_trim($pageTitle) : null;
-		$__options = array_merge($__options, $this->options);
-		$options = array_merge($__options, $options);
+		$options = array_merge($this->options, $options);
 
 		// ページタイトルの設定
 		if ($pageTitle === null) {
