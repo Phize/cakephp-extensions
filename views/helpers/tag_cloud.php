@@ -44,8 +44,6 @@ class TagCloudHelper extends Helper {
 	 * @return array 算出後のデータ
 	 */
 	public function calculate($tags, $options = array()) {
-		if (empty($tags)) return array();
-
 		$defaults = array(
 			'min' => 1,
 			'max' => 25,
@@ -61,6 +59,7 @@ class TagCloudHelper extends Helper {
 		if ($options['filter']['threshold'] !== null) $tags = $this->_prune($tags, $options['filter']['threshold']);
 		if ($options['filter']['limit'] !== null) $tags = $this->_filter($tags, $options['filter']['sort'], $options['filter']['limit']);
 		if ($options['sort'] !== null) $tags = $this->_sort($tags, $options['sort']);
+		if (empty($tags)) return array();
 
 		$rates = $this->_calculateRate($tags);
 
