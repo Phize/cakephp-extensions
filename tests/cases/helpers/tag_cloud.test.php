@@ -11,8 +11,8 @@ class TestTagCloudHelper extends TagCloudHelper {
 		return $this->_sort($tags, $direction);
 	}
 
-	public function test_filter($tags, $direction = null, $limit = null) {
-		return $this->_filter($tags, $direction, $limit);
+	public function test_filter($tags, $limit, $direction = 'desc') {
+		return $this->_filter($tags, $limit, $direction);
 	}
 
 	public function test_calculateRate($tags) {
@@ -97,22 +97,18 @@ class TagCloudHelperTestCase extends CakeTestCase {
 	 * _filter()のテスト
 	 */
 	public function test_filter() {
-		$tags = array('tag1' => 10, 'tag2' => 1, 'tag3' => 0, 'tag4' => 9);
+		$tags = array('tag1' => 10, 'tag2' => 1, 'tag3' => 9, 'tag4' => 0);
 
-		$expected = array('tag1' => 10, 'tag2' => 1, 'tag3' => 0, 'tag4' => 9);
-		$result = $this->TagCloud->test_filter($tags);
+		$expected = array('tag1' => 10, 'tag3' => 9);
+		$result = $this->TagCloud->test_filter($tags, 2);
 		$this->assertIdentical($result, $expected);
 
-		$expected = array('tag1' => 10, 'tag2' => 1);
-		$result = $this->TagCloud->test_filter($tags, null, 2);
+		$expected = array('tag1' => 10, 'tag2' => 1, 'tag3' => 9, 'tag4' => 0);
+		$result = $this->TagCloud->test_filter($tags, 10);
 		$this->assertIdentical($result, $expected);
 
-		$expected = array('tag1' => 10, 'tag2' => 1, 'tag3' => 0, 'tag4' => 9);
-		$result = $this->TagCloud->test_filter($tags, null, 10);
-		$this->assertIdentical($result, $expected);
-
-		$expected = array('tag1' => 10, 'tag2' => 1, 'tag4' => 9);
-		$result = $this->TagCloud->test_filter($tags, 'desc', 3);
+		$expected = array('tag2' => 1, 'tag3' => 9, 'tag4' => 0);
+		$result = $this->TagCloud->test_filter($tags, 3, 'asc');
 		$this->assertIdentical($result, $expected);
 	}
 
