@@ -32,7 +32,9 @@ class TagCloudHelper extends Helper {
 	 * 以下のオプションを指定することができる。
 	 * min			タグランクの最小値
 	 * max			タグランクの最大値
-	 * sort			タグの並び替え方向 ('asc' = 昇順, 'desc' = 降順)
+	 * sort			タグの並び替えオプション
+	 *	key			タグの並び替えキー ('tag' = タグ, 'score' => スコア)
+	 *	order		タグの並び替え方向 ('asc' = 昇順, 'desc' = 降順)
 	 * filter		タグのフィルタリングオプション (並び替え後に指定した件数が抽出される)
 	 *	threshold	タグ件数の閾値 (指定した件数未満のタグが除去される)
 	 *	sort		タグの並び替え方向 ('asc' = 昇順, 'desc' = 降順)
@@ -47,7 +49,10 @@ class TagCloudHelper extends Helper {
 		$defaults = array(
 			'min' => 1,
 			'max' => 25,
-			'sort' => null,
+			'sort' => array(
+				'key' => null,
+				'order' => null
+			),
 			'filter' => array(
 				'threshold' => 1,
 				'sort' => 'desc',
@@ -56,9 +61,16 @@ class TagCloudHelper extends Helper {
 		);
 		$options = Set::merge($defaults, $options);
 
-		if ($options['filter']['threshold'] !== null) $tags = $this->_prune($tags, $options['filter']['threshold']);
-		if ($options['filter']['limit'] !== null) $tags = $this->_filter($tags, $options['filter']['limit'], $options['filter']['sort']);
-		if ($options['sort'] !== null) $tags = $this->_sort($tags, $options['sort']);
+		if ($options['filter'] !== null && isset($options['filter']['threshold']) && $options['filter']['threshold'] !== null) {
+			$tags = $this->_prune($tags, $options['filter']['threshold']);
+		}
+		if ($options['filter'] !== null && isset($options['filter']['limit']) && $options['filter']['limit'] !== null) {
+			$tags = $this->_filter($tags, $options['filter']['limit'], $options['filter']['sort']);
+		}
+		if ($options['sort'] !== null && isset($options['sort']['key']) && isset($options['sort']['order'])
+				&& $options['sort']['key'] !== null && $options['sort']['order'] !== null) {
+			$tags = $this->_sort($tags, $options['sort']['order'], $options['sort']['key']);
+		}
 		if (empty($tags)) return array();
 
 		$rates = $this->_calculateRate($tags);
@@ -94,18 +106,39 @@ class TagCloudHelper extends Helper {
 	 *
 	 * @param array $tags タグのデータ
 	 * @param string $direction 並び替えの方向 ('asc' = 昇順, 'desc' = 降順)
+	 * @param string $key 並び替えのキー ('tag' = タグ, 'score' => スコア)
 	 * @return array 並び替え後のデータ
 	 */
-	protected function _sort($tags, $direction = 'desc') {
-		if ($direction === null) return $tags;
+	protected function _sort($tags, $direction = 'desc', $key = 'score') {
 		$direction = strtolower($direction);
+		$key = strtolower($key);
 
-		switch ($direction) {
-			case 'asc':
-				asort($tags);
+		switch ($key) {
+			case 'score':
+				switch ($direction) {
+					case 'asc':
+						asort($tags);
+						break;
+					case 'desc':
+						arsort($tags);
+						break;
+					default:
+						break;
+				}
 				break;
-			case 'desc':
-				arsort($tags);
+			case 'tag':
+				switch ($direction) {
+					case 'asc':
+						uksort($tags, 'strnatcasecmp');
+						break;
+					case 'desc':
+						if (uksort($tags, 'strnatcasecmp')) {
+							$tags = array_reverse($tags);
+						}
+						break;
+					default:
+						break;
+				}
 				break;
 			default:
 				break;
@@ -123,10 +156,8 @@ class TagCloudHelper extends Helper {
 	 * @return array 限定後のデータ
 	 */
 	protected function _filter($tags, $limit, $direction = 'desc') {
-		if ($limit === null) return $tags;
-
 		$_tags = $tags;
-		$tags = $this->_sort($tags, $direction);
+		$tags = $this->_sort($tags, $direction, 'score');
 		$tags = array_slice($tags, 0, $limit);
 		$tags = array_intersect_key($_tags, $tags);
 
