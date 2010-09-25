@@ -70,37 +70,37 @@ class TagCloudHelperTestCase extends CakeTestCase {
 	 * _sort()のテスト
 	 */
 	public function test_sort() {
-		$tags = array('tag40' => 9, 'tag02' => 1, 'tag1' => 10, 'TAG3' => 0);
+		$tags = array('tag40' => 9, 'tag02' => 1, 'tag1' => 10, 'TAG3' => 0, '5' => 5);
 
-		$expected = array('tag1' => 10, 'tag40' => 9, 'tag02' => 1, 'TAG3' => 0);
+		$expected = array('tag1' => 10, 'tag40' => 9, '5' => 5, 'tag02' => 1, 'TAG3' => 0);
 		$result = $this->TagCloud->test_sort($tags);
 		$this->assertIdentical($result, $expected);
 
-		$expected = array('tag40' => 9, 'tag02' => 1, 'tag1' => 10, 'TAG3' => 0);
+		$expected = array('tag40' => 9, 'tag02' => 1, 'tag1' => 10, 'TAG3' => 0, '5' => 5);
 		$result = $this->TagCloud->test_sort($tags, 'asc', null);
 		$this->assertIdentical($result, $expected);
 
-		$expected = array('tag40' => 9, 'tag02' => 1, 'tag1' => 10, 'TAG3' => 0);
+		$expected = array('tag40' => 9, 'tag02' => 1, 'tag1' => 10, 'TAG3' => 0, '5' => 5);
 		$result = $this->TagCloud->test_sort($tags, null, 'tag');
 		$this->assertIdentical($result, $expected);
 
-		$expected = array('tag40' => 9, 'tag02' => 1, 'tag1' => 10, 'TAG3' => 0);
+		$expected = array('tag40' => 9, 'tag02' => 1, 'tag1' => 10, 'TAG3' => 0, '5' => 5);
 		$result = $this->TagCloud->test_sort($tags, 'unknown', 'tag');
 		$this->assertIdentical($result, $expected);
 
-		$expected = array('tag02' => 1, 'tag1' => 10, 'TAG3' => 0, 'tag40' => 9);
+		$expected = array('5' => 5, 'tag02' => 1, 'tag1' => 10, 'TAG3' => 0, 'tag40' => 9);
 		$result = $this->TagCloud->test_sort($tags, 'asc', 'tag');
 		$this->assertIdentical($result, $expected);
 
-		$expected = array('tag40' => 9, 'TAG3' => 0, 'tag1' => 10, 'tag02' => 1);
+		$expected = array('tag40' => 9, 'TAG3' => 0, 'tag1' => 10, 'tag02' => 1, '5' => 5);
 		$result = $this->TagCloud->test_sort($tags, 'desc', 'tag');
 		$this->assertIdentical($result, $expected);
 
-		$expected = array('TAG3' => 0, 'tag02' => 1, 'tag40' => 9, 'tag1' => 10);
+		$expected = array('TAG3' => 0, 'tag02' => 1, '5' => 5, 'tag40' => 9, 'tag1' => 10);
 		$result = $this->TagCloud->test_sort($tags, 'asc', 'score');
 		$this->assertIdentical($result, $expected);
 
-		$expected = array('tag1' => 10, 'tag40' => 9, 'tag02' => 1, 'TAG3' => 0);
+		$expected = array('tag1' => 10, 'tag40' => 9, '5' => 5, 'tag02' => 1, 'TAG3' => 0);
 		$result = $this->TagCloud->test_sort($tags, 'desc', 'score');
 		$this->assertIdentical($result, $expected);
 	}

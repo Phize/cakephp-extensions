@@ -133,7 +133,7 @@ class TagCloudHelper extends Helper {
 						break;
 					case 'desc':
 						if (uksort($tags, 'strnatcasecmp')) {
-							$tags = array_reverse($tags);
+							$tags = array_reverse($tags, true);
 						}
 						break;
 					default:
