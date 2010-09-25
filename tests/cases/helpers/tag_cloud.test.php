@@ -191,17 +191,17 @@ class TagCloudHelperTestCase extends CakeTestCase {
 		$expected = array(
 			'tag1' => array('score' => 10, 'rank' => 13)
 		);
-		$result = $this->TagCloud->calculate($tags, array('filter' => array('sort' => null, 'limit' => 1)));
+		$result = $this->TagCloud->calculate($tags, array('filter' => array('direction' => null, 'limit' => 1)));
 		$this->assertIdentical($result, $expected);
 
 		$expected = array(
 			'tag2' => array('score' => 1, 'rank' => 13)
 		);
-		$result = $this->TagCloud->calculate($tags, array('filter' => array('sort' => 'asc', 'limit' => 1)));
+		$result = $this->TagCloud->calculate($tags, array('filter' => array('direction' => 'asc', 'limit' => 1)));
 		$this->assertIdentical($result, $expected);
 
 		$expected = array();
-		$result = $this->TagCloud->calculate($tags, array('filter' => array('sort' => null, 'limit' => 0)));
+		$result = $this->TagCloud->calculate($tags, array('filter' => array('direction' => null, 'limit' => 0)));
 		$this->assertIdentical($result, $expected);
 
 		$expected = array(
@@ -217,7 +217,7 @@ class TagCloudHelperTestCase extends CakeTestCase {
 			'tag4' => array('score' => 9, 'rank' => 23),
 			'tag2' => array('score' => 1, 'rank' => 1)
 		);
-		$result = $this->TagCloud->calculate($tags, array('sort' => array('key' => 'score', 'order' => 'desc')));
+		$result = $this->TagCloud->calculate($tags, array('sort' => array('key' => 'score', 'direction' => 'desc')));
 		$this->assertIdentical($result, $expected);
 
 		$expected = array(
@@ -225,7 +225,7 @@ class TagCloudHelperTestCase extends CakeTestCase {
 			'tag2' => array('score' => 1, 'rank' => 1),
 			'tag4' => array('score' => 9, 'rank' => 23)
 		);
-		$result = $this->TagCloud->calculate($tags, array('sort' => array('key' => 'tag', 'order' => 'asc')));
+		$result = $this->TagCloud->calculate($tags, array('sort' => array('key' => 'tag', 'direction' => 'asc')));
 		$this->assertIdentical($result, $expected);
 	}
 

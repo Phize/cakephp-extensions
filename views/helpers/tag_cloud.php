@@ -34,10 +34,10 @@ class TagCloudHelper extends Helper {
 	 * max			タグランクの最大値
 	 * sort			タグの並び替えオプション
 	 *	key			タグの並び替えキー ('tag' = タグ, 'score' => スコア)
-	 *	order		タグの並び替え方向 ('asc' = 昇順, 'desc' = 降順)
+	 *	direction	タグの並び替え方向 ('asc' = 昇順, 'desc' = 降順)
 	 * filter		タグのフィルタリングオプション (並び替え後に指定した件数が抽出される)
 	 *	threshold	タグ件数の閾値 (指定した件数未満のタグが除去される)
-	 *	sort		タグの並び替え方向 ('asc' = 昇順, 'desc' = 降順)
+	 *	direction	タグの並び替え方向 ('asc' = 昇順, 'desc' = 降順)
 	 *				(並び替えは抽出のための一時的なもの)
 	 *	limit		タグの件数
 	 *
@@ -51,11 +51,11 @@ class TagCloudHelper extends Helper {
 			'max' => 25,
 			'sort' => array(
 				'key' => null,
-				'order' => null
+				'direction' => null
 			),
 			'filter' => array(
 				'threshold' => 1,
-				'sort' => 'desc',
+				'direction' => 'desc',
 				'limit' => null
 			)
 		);
@@ -65,11 +65,11 @@ class TagCloudHelper extends Helper {
 			$tags = $this->_prune($tags, $options['filter']['threshold']);
 		}
 		if ($options['filter'] !== null && isset($options['filter']['limit']) && $options['filter']['limit'] !== null) {
-			$tags = $this->_filter($tags, $options['filter']['limit'], $options['filter']['sort']);
+			$tags = $this->_filter($tags, $options['filter']['limit'], $options['filter']['direction']);
 		}
-		if ($options['sort'] !== null && isset($options['sort']['key']) && isset($options['sort']['order'])
-				&& $options['sort']['key'] !== null && $options['sort']['order'] !== null) {
-			$tags = $this->_sort($tags, $options['sort']['order'], $options['sort']['key']);
+		if ($options['sort'] !== null && isset($options['sort']['key']) && isset($options['sort']['direction'])
+				&& $options['sort']['key'] !== null && $options['sort']['direction'] !== null) {
+			$tags = $this->_sort($tags, $options['sort']['direction'], $options['sort']['key']);
 		}
 		if (empty($tags)) return array();
 
