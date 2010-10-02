@@ -9,7 +9,7 @@
  *		'tag2' => 200
  * )
  */
-class TagCloudHelper extends Helper {
+class TagCloudHelper extends AppHelper {
 	/**
 	 * タグのランクを算出
 	 *
